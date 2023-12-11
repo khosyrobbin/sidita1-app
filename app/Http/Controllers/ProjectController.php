@@ -2,63 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProjectModel;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('project');
+        $projects = ProjectModel::all();
+
+        return view('project', compact('projects'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_project' => 'required|string',
+        ]);
+
+        ProjectModel::create([
+            'nama_project' => $request->nama_project,
+        ]);
+
+        return redirect()->route('project.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(ProjectModel $project)
     {
-        //
+        //return response
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Post',
+            'data'    => $project
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(ProjectModel $project)
     {
-        //
+        return view('components.projects.EditProject', compact('project'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ProjectModel $project)
     {
-        //
+        $request->validate([
+            'nama_project' => 'required|string',
+        ]);
+
+        $project->update([
+            'nama_project' => $request->nama_project,
+        ]);
+        return redirect()->route('project.index');
+        //return response
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Data Berhasil Diudapte!',
+        //     'data'    => $project
+        // ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(ProjectModel $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->route('project.index');
     }
 }
