@@ -13,4 +13,9 @@ class ProjectModel extends Model
     protected $fillable = [
         'nama_project',
     ];
+
+    public function worklog()
+    {
+        return $this->hasMany(WorklogModel::class);
+    }
 }

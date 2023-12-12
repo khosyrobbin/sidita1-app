@@ -15,4 +15,9 @@ class WorklogModel extends Model
         'work_date',
         'hours_worked',
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(ProjectModel::class);
+    }
 }

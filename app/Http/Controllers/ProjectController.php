@@ -52,12 +52,6 @@ class ProjectController extends Controller
             'nama_project' => $request->nama_project,
         ]);
         return redirect()->route('project.index');
-        //return response
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Data Berhasil Diudapte!',
-        //     'data'    => $project
-        // ]);
     }
 
     public function destroy(ProjectModel $project)
