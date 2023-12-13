@@ -1,6 +1,29 @@
 @extends('layouts.template')
 
 @section('content')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container grid px-6 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -14,8 +37,6 @@
                 @csrf
                 <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
                     <label class="block text-sm">
-                        <span class="text-gray-700 dark:text-gray-400">Nama Project</span>
-
                         <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
                             <input type="hidden" id="user_id" name="user_id" value="{{ Auth::user()->id }}"
                                 class="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
@@ -55,6 +76,8 @@
                         </div>
 
                         <div class="relative text-gray-500 focus-within:text-purple-600 dark:focus-within:text-purple-400">
+                            {{-- <input type="number" id="hours_worked" name="hours_worked" min="1" max="8"
+                                class="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"> --}}
                             <select name="hours_worked" id="hours_worked"
                                 class="block w-full pl-10 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input">
                                 <option value="">Pilih Jumlah Jam Kerja</option>
@@ -105,12 +128,13 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <?php $no = 1 ?>
                             @foreach ($worklog as $w)
                                 <?php $project = App\Models\ProjectModel::find($w->project_id); ?>
                                 @if ($w->user_id == Auth::user()->id)
                                     <tr class="text-gray-700 dark:text-gray-400">
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $loop->iteration }}
+                                            {{ $no++ }}
                                         </td>
                                         <td class="px-4 py-3 text-xs">
                                             {{ Auth::user()->name }}

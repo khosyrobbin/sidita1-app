@@ -9,9 +9,12 @@
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/tailwind.output.css" />
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="{{ asset('template') }}/assets/js/init-alpine.js"></script>
+    {{-- SweetAlert --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 </head>
 
 <body>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
         <!-- Desktop nav sidebar -->
         @include('layouts.navigator')

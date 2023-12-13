@@ -1,6 +1,29 @@
 @extends('layouts.template')
 
 @section('content')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        </script>
+    @endif
+
     <main class="h-full pb-16 overflow-y-auto">
         <div class="container grid px-6 mx-auto">
             <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
@@ -56,10 +79,11 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                            <?php $no = 1 ?>
                             @foreach ($projects as $p)
                                 <tr class="text-gray-700 dark:text-gray-400">
                                     <td class="px-4 py-3 text-sm">
-                                        {{ $loop->iteration }}
+                                        {{ $no++ }}
                                     </td>
                                     <td class="px-4 py-3 text-xs">
                                         {{ $p->nama_project }}
@@ -78,7 +102,7 @@
                                                         </path>
                                                     </svg>
                                                 </a>
-                                                
+
                                                 @method('DELETE')
                                                 <button type="submit"
                                                     class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"

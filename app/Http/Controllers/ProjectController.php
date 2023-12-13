@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $projects = ProjectModel::all();
@@ -16,15 +21,21 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama_project' => 'required|string',
-        ]);
+        try {
+            $request->validate([
+                'nama_project' => 'required|string',
+            ]);
 
-        ProjectModel::create([
-            'nama_project' => $request->nama_project,
-        ]);
+            ProjectModel::create([
+                'nama_project' => $request->nama_project,
+            ]);
 
-        return redirect()->route('project.index');
+            return redirect()->route('project.index')
+                ->with('success', 'Project berhasil disimpan!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Project gagal disimpan!. ' . $e->getMessage());
+        }
     }
 
     public function show(ProjectModel $project)
@@ -44,20 +55,32 @@ class ProjectController extends Controller
 
     public function update(Request $request, ProjectModel $project)
     {
-        $request->validate([
-            'nama_project' => 'required|string',
-        ]);
+        try {
+            $request->validate([
+                'nama_project' => 'required|string',
+            ]);
 
-        $project->update([
-            'nama_project' => $request->nama_project,
-        ]);
-        return redirect()->route('project.index');
+            $project->update([
+                'nama_project' => $request->nama_project,
+            ]);
+            return redirect()->route('project.index')
+                ->with('success', 'Project berhasil dupdate!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Project gagal diupdate!. ' . $e->getMessage());
+        }
     }
 
     public function destroy(ProjectModel $project)
     {
-        $project->delete();
+        try {
+            $project->delete();
 
-        return redirect()->route('project.index');
+            return redirect()->route('project.index')
+            ->with('success', 'Project berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Project gagal dihapus!' . $e->getMessage());
+        }
     }
 }
