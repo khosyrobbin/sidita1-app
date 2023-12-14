@@ -33,7 +33,7 @@ class WorklogModel extends Model
         //     ->orderBy('month', 'desc')
         //     ->get();
 
-        return static::selectRaw('MONTH(work_date) as month, YEAR(work_date) as year, SUM(hours_worked) as total_hours, user_id')
+        return static::selectRaw('EXTRACT(MONTH FROM work_date) as month, EXTRACT(YEAR FROM work_date) as year, SUM(hours_worked) as total_hours, user_id')
             ->groupBy('year', 'month', 'user_id')
             ->orderBy('year', 'asc')
             ->orderBy('month', 'asc')

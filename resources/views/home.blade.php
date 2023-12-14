@@ -19,7 +19,7 @@
                                 <th class="px-4 py-3">No</th>
                                 <th class="px-4 py-3">Nama User</th>
                                 <th class="px-4 py-3">Bulan</th>
-                                <th class="px-4 py-3">Jumlah Jam Kerja(Bulan)</th>
+                                <th class="px-4 py-3">Jumlah Jam Kerja/Total Jam Kerja</th>
                                 <th class="px-4 py-3">Nilai</th>
                             </tr>
                         </thead>
@@ -38,7 +38,7 @@
                                             {{ date('F Y', strtotime($group->year . '-' . $group->month . '-01')) }}
                                         </td>
                                         <td class="px-4 py-3 text-sm">
-                                            {{ $group->total_hours }} Jam
+                                            {{ $group->total_hours }} / 176 Jam
                                         </td>
                                         <td class="px-4 py-3 text-sm">
                                             <?php $nilai = ($group->total_hours)/176 ?>
